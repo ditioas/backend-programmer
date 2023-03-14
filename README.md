@@ -1,4 +1,4 @@
-#### Checkin flow in Ditio
+### Checkin flow in Ditio
 One of the core functions of the Ditio application is to be able to register your working day.
 On a normal working day, a worker arrives at a construction site and he will know from his foreman what tasks he is supposed to work on.
 The worker then opens the Ditio app on his phone, looks for the right project, the task in the project and a machine that he will use in order to perform that task. 
