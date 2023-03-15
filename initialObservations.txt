@@ -1,0 +1,16 @@
+From the intial observation of the work flow, I was able to think of the following entities and
+attributes. As next step I will be refining more attributes I might need. Also I would like to 
+perform analysis on the relationships between the entites and their nature whether 1:1, 1:m or m:n
+and any further relationship attributes we might need.
+
+User: (name , profile_photo, password) 
+
+Projects(name, description, location, scheduled, recent) 
+
+Tasks (Task name, description, scheduled time, startTime, finishTime)
+
+Machine/Resource (name, id)
+
+Company(name, id)
+
+Administrator(Name, photo, id)
