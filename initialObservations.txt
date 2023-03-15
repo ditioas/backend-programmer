@@ -4,13 +4,33 @@ perform analysis on the relationships between the entites and their nature wheth
 and any further relationship attributes we might need.
 
 1. User (name , profile_photo, password) 
-
 2. Projects(name, description, location, scheduled, recent) 
-
-3. Tasks (Task name, description, scheduled time, startTime, finishTime)
-
+3. Tasks (name, description, startTime, finishTime)
 4. Machine/Resource (name, id)
-
 5. Company (name, id)
-
 6. Administrator (Name, photo, id)
+
+# The work flow can be seen as a sequence of following steps.
+1. User logins into the app
+2. User selects a company.
+3. User gets a list of project which are scheduled and selects one project.
+4. User gets a list of resources and selects a resource.
+5. User get a list of tasks belonging to the project and selects one task.
+6. User clicks on check-in and records the start time.
+7. User enters on check-out and records the end time.
+
+Steps 2-7 can be repeats if user selects a different company which might have its own
+set of project, tasks and resources.
+
+There seems to be nice tree like relationships between these entities, basically (1:m)
+
+                             user
+                 /                             \
+          company1                              company2
+     /       |     \                        /       |        \
+project1    project2  project3          project4   project5   project6
+  / | \       / | \     / | \           / |  \     / | \      / | \
+t1 t2 t3     t4 t5 t6  t7 t8 t9     t10 t11 t12   t1 t2 t3    t4 t5 t6
+
+
+Here I assume that that a project belongs to single company and a task belongs to one project only.
