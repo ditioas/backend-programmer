@@ -3,14 +3,14 @@ attributes. As next step I will be refining more attributes I might need. Also I
 perform analysis on the relationships between the entites and their nature whether 1:1, 1:m or m:n
 and any further relationship attributes we might need.
 
-User: (name , profile_photo, password) 
+1. User (name , profile_photo, password) 
 
-Projects(name, description, location, scheduled, recent) 
+2. Projects(name, description, location, scheduled, recent) 
 
-Tasks (Task name, description, scheduled time, startTime, finishTime)
+3. Tasks (Task name, description, scheduled time, startTime, finishTime)
 
-Machine/Resource (name, id)
+4. Machine/Resource (name, id)
 
-Company(name, id)
+5. Company (name, id)
 
-Administrator(Name, photo, id)
+6. Administrator (Name, photo, id)
