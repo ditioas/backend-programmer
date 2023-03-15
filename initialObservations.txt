@@ -34,3 +34,9 @@ t1 t2 t3     t4 t5 t6  t7 t8 t9     t10 t11 t12   t1 t2 t3    t4 t5 t6
 
 
 Here I assume that that a project belongs to single company and a task belongs to one project only.
+From initial impression it seems we should shard the database at the level of company. So that we 
+can scale accordingly the rest of the database and queries accordingly. If some company has many projects 
+or users we can allocate more resources/computation for that shard.
+
+Also from the steps mentioned we should perform a analysis of read/write load for the transaction to get
+better clarity. 
