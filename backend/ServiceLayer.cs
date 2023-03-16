@@ -47,18 +47,31 @@ public class UserTask
 
 public interface IUserCompanyService
 {
-    List<Company> GetCompaniesByUserId(int userId);
+    List<int> GetCompaniesIdByUserId(int userId);
 }
 
 public interface ICompanyService
 {
+    List<Company> GetCompanyById(List<int> companyIds);
+
     string GetUrlForCompany(int companyId);
+}
+
+public interface IUserProjectService
+{
+    public List<int> GetProjectIdsForUser(int userId);
 }
 
 public interface IProjectService
 {
-    public List<Project> GetProjectsForUser(int userId);
+    public List<Project> GetProjectsById(List<int> projectId);
 }
+
+public interface IUserResouceService
+{
+    public List<int> GetResourceIdForUser(int userId);
+}
+
 
 public interface IResourceService
 {

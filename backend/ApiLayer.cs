@@ -5,13 +5,8 @@ public class UserCompanyController : Controller
 {
     private readonly IUserCompanyService userCompanyService;
 
-    public UserCompanyController(IUserCompanyService userCompanyService)
-    {
-        userCompanyService = userCompanyService;
-    }
-
     [HttpGet("{userId}")]
-    public IActionResult GetCompaniesByUserId(int userId)
+    public IActionResult GetCompaniesIdByUserId(int userId)
     {
         var companies = userCompanyService.GetCompaniesByUserId(userId);
         return Ok(companies);
@@ -23,9 +18,11 @@ public class CompanyController : ControllerBase
 {
     private readonly ICompanyService companyService;
 
-    public CompanyController(ICompanyService companyService)
+    [HttpGet("{companyId}")]
+    public ActionResult GetCompaniesById(List<int> companyIds)
     {
-        companyService = companyService;
+        var company = companyService.GetUrlForCompany(companyId);
+        return Ok(url);
     }
 
     [HttpGet("{companyId}/url")]
@@ -36,21 +33,43 @@ public class CompanyController : ControllerBase
     }
 }
 
+
+[Route("api/[controller]")]
+public class UserProjectController : ControllerBase
+{
+    private readonly IUserProjectService userProjectService;
+
+    [HttpGet("{userId}")]
+    public IActionResult GetProjectIdsForUser(int userId)
+    {
+        var projects = projectService.GetProjectIdsForUser(userId);
+        return Ok(projects);
+    }
+}
+
 [Route("api/[controller]")]
 public class ProjectController : ControllerBase
 {
     private readonly IProjectService projectService;
 
-    public ProjectController(IProjectService projectService)
+    [HttpGet("{companyId}")]
+    public ActionResult GetProjectsById(List<int> projectIds)
     {
-        projectService = projectService;
+        var company = companyService.GetUrlForCompany(companyId);
+        return Ok(url);
     }
+}
+
+[Route("api/[controller]")]
+public class UserResourceController : ControllerBase
+{
+    private readonly IUserResouceService userResouceService;
 
     [HttpGet("{userId}")]
-    public IActionResult GetProjectsForUser(int userId)
+    public IActionResult GetResourceIdForUser(int userId)
     {
-        var projects = projectService.GetProjectsForUser(userId);
-        return Ok(projects);
+        var resourceId = userResouceService.GetResourceIdForUser(userId);
+        return Ok(resourceId);
     }
 }
 
@@ -59,10 +78,26 @@ public class ResourceController : ControllerBase
 {
     private readonly IResourceService resourceService;
 
-    public ResourceController(IResourceService resourceService)
+[   HttpGet("{userId}")]
+    public IActionResult GetResourceIdForUser(int userId)
     {
-        resourceService = resourceService;
+        var resources = resourceService.GetResourcesForUser(userId);
+        return Ok(resources);
     }
+
+    [HttpPut("{resourceId}/availability/{isAvailable}")]
+    public IActionResult UpdateResourceAvailability(int resourceId, bool isAvailable)
+    {
+        resourceService.UpdateResourceAvailability(resourceId, isAvailable);
+        return Ok();
+    }
+}
+
+
+[Route("api/[controller]")]
+public class ResourceController : ControllerBase
+{
+    private readonly IResourceService resourceService;
 
     [HttpGet("users/{userId}")]
     public ActionResult<List<Resource>> GetResourcesForUser(int userId)
@@ -84,11 +119,6 @@ public class TaskController : ControllerBase
 {
     private readonly ITaskService taskService;
 
-    public TaskController(ITaskService taskService)
-    {
-        taskService = taskService;
-    }
-
     [HttpGet("project/{projectId}")]
     public IActionResult GetTasksByProjectId(int projectId)
     {
@@ -101,13 +131,6 @@ public class TaskController : ControllerBase
 [Route("api/[controller]")]
 public class UserTaskController : ControllerBase
 {
-    private readonly IUserTaskService userTaskService;
-
-    public UserTaskController(IUserTaskService userTaskService)
-    {
-        userTaskService = userTaskService;
-    }
-
     [HttpPost]
     public ActionResult CreateUserTask(int userId, int taskId, int resourceId, bool taskCompleted)
     {
@@ -126,6 +149,3 @@ public class UserTaskController : ControllerBase
         userTaskService.UpdateUserTaskCompletion(userTaskId, checkOutTime, taskCompleted);
     }
 }
-
-
-
