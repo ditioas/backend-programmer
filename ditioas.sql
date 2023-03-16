@@ -59,14 +59,6 @@ CREATE TABLE user_scheduled_for_resources (
   FOREIGN KEY (resource_id) REFERENCES resources(resource_id)
 );
 
-CREATE TABLE user_scheduled_for_task (
-  user_id INTEGER NOT NULL,
-  task_id INTEGER NOT NULL,
-  PRIMARY KEY (user_id, task_id),
-  FOREIGN KEY (user_id) REFERENCES users(user_id),
-  FOREIGN KEY (task_id) REFERENCES tasks(task_id)
-);
-
 CREATE TABLE user_tasks (
   user_task_id SERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL,
