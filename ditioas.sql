@@ -141,7 +141,7 @@ FROM user_tasks
 WHERE user_id = 1234 AND task_id = 3000 AND resource_id = 2000 AND task_completed = false;
 
 UPDATE user_tasks
-SET check_out_time = '2023-03-17 17:00:00', task_completed = true
+SET check_out_time = '2023-01-25 12:00:00', task_completed = true
 WHERE user_task_id = 4000;
 
 UPDATE resources
