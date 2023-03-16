@@ -22,5 +22,5 @@ or all the tasks?
 
 Q5. I think resources are company wide entity and can be used across different projects and tasks
 albeit only when free and not used in some other task. Is this understanding correct?
-
+So the same resource R1 can be shown to user in Project P1 -> task T1 and Project P2 -> task T2?
 

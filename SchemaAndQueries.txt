@@ -1,0 +1,83 @@
+1. users(user_id, user_name, email, password) 
+
+2. projects(project_id, project_name, description, location) 
+
+3. tasks(task_id, task_name, description, project_id)
+
+4. resources(resource_id, resource_name)
+
+5. companies(company_id, comapany_name)
+
+6. admins(admin_id, admin_name, photo)
+
+
+7. user_works_for_company(user_id, company_id)
+
+8. user_scheduled_for_project(user_id, project_id)
+
+9. user_scheduled_for_resources(user_id, resource_id)
+
+9. user_scheduled_for_task(user_id, task_id, resource_id, checkin_time, checkout_time)
+
+
+DB queries for a typical transaction at Ditioas:
+
+Let's say we have a user in table users with following data,
+(1234, "RAHUL", "RAHUL@GMAIL.COM", "HASH_PASSWORD")  
+
+
+1.  SELECT * 
+	FROM users
+	WHERE users.email == "RAHUL@GMAIL.COM" and password == "HASH_PASSWORD"
+    
+#   user auth done and user is logged in
+	
+2.  SELECT company_name
+	FROM companies
+	WHERE company_id IN (SELECT company_id
+						  FROM user_works_for_company
+					      WHERE user_id == 1234)
+#   user selects a company from the list of companies they work for let say company_id = "company_123"
+#   Now we have sharded the database on company_id i.e we have a separate database running for every
+#   company with relations numbers [2, 3, 4, 5, 6, 8, 9]
+#   we pick the database url to which the subsequent queries should hit, lets say we maintain a cache
+#   server with redis having (key, value) = (company_id, database_server_url)
+#   so the following queries will go to "database_server_url".
+
+					
+3.  SELECT project_name, description, location 
+	FROM projects 
+	WHERE project_id IN (SELECT project_id 
+	                     FROM user_scheduled_for_project 
+	                     WHERE user_id = 1234)
+
+4.  SELECT resource_id, resource_name
+    FROM resources
+    WHERE resource_id IN (SELECT resource_id
+                          FROM user_scheduled_for_resources
+                          WHERE user_id = 1234)
+
+
+# Let say user chooses a project with project_id = "project_123" and resource with resource_id = "resource_123"
+
+5.  SELECT tasks.task_id, tasks.task_name, tasks.description
+    FROM tasks
+    WHERE tasks.project_id = "project_123"
+    AND tasks.task_id IN (
+        SELECT user_scheduled_for_task.task_id
+        FROM user_scheduled_for_task
+        WHERE user_scheduled_for_task.user_id = 1234
+    );
+
+# Let say user chooses a task with task_id = "task_123"
+
+6. UPDATE user_scheduled_for_task
+   SET resource_id = "resource_123", checkin_time = '2023-01-25 09:00:00'
+   WHERE user_id = 1234 AND task_id = "task_123"
+
+7. UPDATE user_scheduled_for_task
+   SET checkout_time = '2023-01-25 11:00:00'
+   WHERE user_id = 1234 AND task_id = "task_123"
+
+
+
