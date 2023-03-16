@@ -18,9 +18,7 @@
 
 9. user_scheduled_for_resources(user_id, resource_id)
 
-10. user_scheduled_for_task(user_id, task_id)
-
-11. user_tasks(user_task_id, user_id, task_id, resource_id, check_in_time, check_out_time)
+10. user_tasks(user_task_id, user_id, task_id, resource_id, check_in_time, check_out_time)
 
 
 # DB QUERIES FOR A TYPICAL TRANSACTION AT DITIO:
@@ -39,6 +37,9 @@ Let's say we have a user in table users with following data,
     WHERE company_id IN (SELECT company_id
 	                     FROM user_works_for_company
                          WHERE user_id == 1234)
+
+
+
 
 #   If the assumption is correct and there is not an overlap between the project, task and resources
 #   from one company to another. We have a natural partition happening in the tables. 
