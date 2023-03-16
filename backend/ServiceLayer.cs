@@ -2,6 +2,7 @@
 // transaction in discussion. We can extend the interfaces to have other or all of the 
 // CRUD methods that might be used. For example CompanyService might have addCompany() 
 // method that can be invoked by admin to add a new company, similarly for other services.
+// Task is a keyword in C# but we have used it as class name
 
 public class Company
 {

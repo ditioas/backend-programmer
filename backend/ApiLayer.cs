@@ -19,9 +19,9 @@ public class CompanyController : ControllerBase
     private readonly ICompanyService companyService;
 
     [HttpGet("{companyId}")]
-    public ActionResult GetCompaniesById(List<int> companyIds)
+    public ActionResult GetCompanyById(List<int> companyIds)
     {
-        var company = companyService.GetUrlForCompany(companyId);
+        var company = companyService.GetCompanyById(companyId);
         return Ok(url);
     }
 
@@ -73,26 +73,6 @@ public class UserResourceController : ControllerBase
     }
 }
 
-[Route("api/[controller]")]
-public class ResourceController : ControllerBase
-{
-    private readonly IResourceService resourceService;
-
-[   HttpGet("{userId}")]
-    public IActionResult GetResourceIdForUser(int userId)
-    {
-        var resources = resourceService.GetResourcesForUser(userId);
-        return Ok(resources);
-    }
-
-    [HttpPut("{resourceId}/availability/{isAvailable}")]
-    public IActionResult UpdateResourceAvailability(int resourceId, bool isAvailable)
-    {
-        resourceService.UpdateResourceAvailability(resourceId, isAvailable);
-        return Ok();
-    }
-}
-
 
 [Route("api/[controller]")]
 public class ResourceController : ControllerBase
@@ -126,7 +106,6 @@ public class TaskController : ControllerBase
         return Ok(tasks);
     }
 }
-
 
 [Route("api/[controller]")]
 public class UserTaskController : ControllerBase
