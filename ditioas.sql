@@ -27,7 +27,8 @@ CREATE TABLE resources (
 
 CREATE TABLE companies (
   company_id SERIAL PRIMARY KEY,
-  company_name VARCHAR(50) NOT NULL
+  company_name VARCHAR(50) NOT NULL,
+  url TEXT NOT NULL,
 );
 
 CREATE TABLE admins (
@@ -147,3 +148,5 @@ WHERE user_task_id = 4000;
 UPDATE resources
 SET resource_available = true
 WHERE resource_id = 2000;
+
+

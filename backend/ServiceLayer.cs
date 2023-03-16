@@ -1,3 +1,17 @@
+// most of the methods in service interfaces have only the operations related to
+// transaction in discussion. We can extend the interfaces to have other or all of the 
+// CRUD methods that might be used. For example CompanyService might have addCompany() 
+// method that can be invoked by admin to add a new company, similarly for other services.
+
+public class Company
+{
+    public int CompanyId { get; set; }
+
+    public string CompanyName { get; set; }
+
+    public string CompanyDatabaseUrl { get; set; }
+}
+
 public class Project
 {
     public int ProjectId { get; set; }
@@ -29,6 +43,16 @@ public class UserTask
     public bool TaskCompleted {get; set;}
     public DateTime CheckInTime { get; set; }
     public DateTime CheckOutTime { get; set; }
+}
+
+public interface IUserCompanyService
+{
+    List<Company> GetCompaniesByUserId(int userId);
+}
+
+public interface ICompanyService
+{
+    string GetUrlForCompany(int companyId);
 }
 
 public interface IProjectService
