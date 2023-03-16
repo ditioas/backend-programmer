@@ -1,0 +1,26 @@
+Q1: When a user changes the company. What happens to the project, resources and tasks?
+I assume each company has its own set of project, resources and tasks and doesn't overlap
+with other companies (p, r, t) ?
+
+i.e a project, resource and task belong to a single company. Is this understanding correct?
+
+
+Q2: I estimate we don't need the scale of google and facebook reaching 1B users for our database
+design, based on some estimate and fair idea about which business ditio is in lets estimate the
+range for the number of users be in range of 100k-10M as of now. So as to scope our discussion.
+What do you think of this estimate?
+
+
+Q3: There can be many projects inside the company, so the user is shown only a subset of it -
+project he is been assigned/scheduled? So a company might have project p1, p2, p3, p4 etc.
+But user A is scheduled for project p1, p3.
+
+Is this understanding correct? 
+
+Q4. Similarly, a project can have many tasks, so the user is shown only a subset of these tasks
+or all the tasks?
+
+Q5. I think resources are company wide entity and can be used across different projects and tasks
+albeit only when free and not used in some other task. Is this understanding correct?
+
+
