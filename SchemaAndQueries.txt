@@ -37,8 +37,8 @@ Let's say we have a user in table users with following data,
 2.  SELECT company_id, company_name
     FROM companies
     WHERE company_id IN (SELECT company_id
-						  FROM user_works_for_company
-					      WHERE user_id == 1234)
+	                     FROM user_works_for_company
+                         WHERE user_id == 1234)
 
 #   If the assumption is correct and there is not an overlap between the project, task and resources
 #   from one company to another. We have a natural partition happening in the tables. 
@@ -49,7 +49,7 @@ Let's say we have a user in table users with following data,
 
 #   User chooses a company from the list of companies they work for, let say company_id = "company_123".
 #   Now we have sharded the database on company_id i.e we have a separate database running for every
-#   company having its own tables with from table numbers [2, 3, 4, 5, 6, 8, 9]
+#   company having its own tables with from table numbers [2, 3, 4, 5, 6, 8, 9, 10]
 
 #   we pick the database url to which the subsequent queries should hit, lets say we maintain a cache
 #   server with redis having (key, value) = (company_id, database_server_url)
@@ -97,6 +97,11 @@ Let's say we have a user in table users with following data,
 7. UPDATE user_scheduled_for_task
    SET checkout_time = '2023-01-25 11:00:00'
    WHERE user_id = 1234 AND task_id = "task_123"
+
+
+# Next Steps,
+After clarity on the set of assumption, we can have a ER or UML diagram to respresent the
+schema diagramatically.
 
 
 
