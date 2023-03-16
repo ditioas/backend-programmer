@@ -10,8 +10,7 @@
 
 5. companies(company_id, comapany_name)
 
-6. admins(admin_id, admin_name, photo)
-
+6. admins(admin_id, admin_name)
 
 7. user_works_for_company(user_id, company_id)
 
@@ -19,8 +18,9 @@
 
 9. user_scheduled_for_resources(user_id, resource_id)
 
-10. user_scheduled_for_task(user_id, task_id, resource_id, checkin_time, checkout_time)
+10. user_scheduled_for_task(user_id, task_id)
 
+11. user_tasks(user_task_id, user_id, task_id, resource_id, check_in_time, check_out_time)
 
 
 # DB QUERIES FOR A TYPICAL TRANSACTION AT DITIO:
@@ -98,10 +98,6 @@ Let's say we have a user in table users with following data,
    SET checkout_time = '2023-01-25 11:00:00'
    WHERE user_id = 1234 AND task_id = "task_123"
 
-
-# Next Steps,
-After clarity on the set of assumption, we can have a ER or UML diagram to respresent the
-schema diagramatically.
 
 
 
