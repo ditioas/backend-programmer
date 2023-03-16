@@ -78,7 +78,7 @@ public interface IUserTasksService
 
     int GetUserTaskId(int userId, int taskId, int resourceId, bool taskCompleted);
 
-    void UpdateUserTaskCompletion(int userTaskId, DateTime checkOutTime);
+    void UpdateUserTaskCompletion(int userTaskId, DateTime checkOutTime, bool taskCompleted);
 }
 
 

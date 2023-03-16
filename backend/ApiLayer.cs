@@ -121,9 +121,9 @@ public class UserTaskController : ControllerBase
     }
 
     [HttpPut("{userTaskId}")]
-    public ActionResult UpdateUserTaskCompletion(int userTaskId, DateTime checkOutTime)
+    public ActionResult UpdateUserTaskCompletion(int userTaskId, DateTime checkOutTime, bool taskCompleted)
     {
-        userTaskService.UpdateUserTaskCompletion(userTaskId, checkOutTime);
+        userTaskService.UpdateUserTaskCompletion(userTaskId, checkOutTime, taskCompleted);
     }
 }
 
