@@ -52,8 +52,8 @@ public class ProjectController : ControllerBase
 {
     private readonly IProjectService projectService;
 
-    [HttpGet("{companyId}")]
-    public ActionResult GetProjectsById(List<int> projectIds)
+    [HttpGet("")]
+    public ActionResult GetProjectsById([FromQuery] List<int> projectIds)
     {
         var company = companyService.GetUrlForCompany(companyId);
         return Ok(url);
@@ -79,10 +79,10 @@ public class ResourceController : ControllerBase
 {
     private readonly IResourceService resourceService;
 
-    [HttpGet("users/{userId}")]
-    public ActionResult<List<Resource>> GetResourcesForUser(int userId)
+    [HttpGet("")]
+    public ActionResult<List<Resource>> GetResourcesById([FromQuery] List<int> projectIds)
     {
-        var resources = resourceService.GetResourcesForUser(userId);
+        var resources = resourceService.GetResourcesById(resourceIds);
         return Ok(resources);
     }
 

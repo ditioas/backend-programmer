@@ -73,11 +73,9 @@ public interface IUserResouceService
     public List<int> GetResourceIdForUser(int userId);
 }
 
-
 public interface IResourceService
-{
-    List<Resource> GetResourcesForUser(int userId);
-
+{   
+    List<Resource> GetResourcesById(List<int> resourceIds);
     void UpdateResourceAvailability(int resourceId, bool isAvailable);
 }
 
