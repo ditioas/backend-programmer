@@ -45,7 +45,7 @@ public interface IUserTaskService
 // 7. resourceService.UpdateResourceAvailability(false)
 
 // Check-out
-// 8. userTaskService.GetUserTaskIn()
+// 8. userTaskService.GetUserTaskId()
 // 9. userTaskService.UpdateUserTaskCompletion()
 // 10. resourceService.UpdateResourceAvailability(true)
 

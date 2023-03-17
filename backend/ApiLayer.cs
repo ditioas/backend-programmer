@@ -1,130 +1,76 @@
-// auth handling, error handling and unit testing not implemented.
-
-[Route("api/[controller]")]
-public class UserCompanyController : Controller
+public class UserController : ControllerBase
 {
-    private readonly IUserCompanyService userCompanyService;
+    private readonly IUserService _userService;
 
-    [HttpGet("{userId}")]
-    public IActionResult GetCompaniesIdByUserId(int userId)
+    [HttpGet("{userId}/companies")]
+    public IActionResult GetAllCompaniesForUser(int userId)
     {
-        var companies = userCompanyService.GetCompaniesByUserId(userId);
+        var companies = _userService.GetAllCompaniesForUser(userId);
         return Ok(companies);
     }
-}
 
-[Route("api/[controller]")]
-public class CompanyController : ControllerBase
-{
-    private readonly ICompanyService companyService;
-
-    [HttpGet("{companyId}")]
-    public ActionResult GetCompanyById(List<int> companyIds)
+    [HttpGet("{userId}/projects")]
+    public IActionResult GetAllProjectsForUser(int userId)
     {
-        var company = companyService.GetCompanyById(companyId);
-        return Ok(url);
-    }
-
-    [HttpGet("{companyId}/url")]
-    public ActionResult<string> GetUrlForCompany(int companyId)
-    {
-        var url = companyService.GetUrlForCompany(companyId);
-        return Ok(url);
-    }
-}
-
-
-[Route("api/[controller]")]
-public class UserProjectController : ControllerBase
-{
-    private readonly IUserProjectService userProjectService;
-
-    [HttpGet("{userId}")]
-    public IActionResult GetProjectIdsForUser(int userId)
-    {
-        var projects = projectService.GetProjectIdsForUser(userId);
+        var projects = _userService.GetAllProjectsForUser(userId);
         return Ok(projects);
     }
+
+    [HttpGet("{userId}/resources")]
+    public IActionResult GetAllAvailableResourcesForUser(int userId)
+    {
+        var resources = _userService.GetAllAvailableResourcesForUser(userId);
+        return Ok(resources);
+    }
 }
 
-[Route("api/[controller]")]
-public class ProjectController : ControllerBase
+public class CompanyController : ControllerBase
 {
-    private readonly IProjectService projectService;
+    private readonly ICompanyService _companyService;
 
-    [HttpGet("")]
-    public ActionResult GetProjectsById([FromQuery] List<int> projectIds)
+    [HttpGet("{companyId}/databaseUrl")]
+    public ActionResult<string> GetDatabaseUrl(int companyId)
     {
-        var company = companyService.GetUrlForCompany(companyId);
+        var url = _companyService.GetDatabaseUrl(companyId);
         return Ok(url);
     }
 }
 
-[Route("api/[controller]")]
-public class UserResourceController : ControllerBase
+public class ProjectController : ControllerBase
 {
-    private readonly IUserResouceService userResouceService;
+    private readonly IProjectService _projectService;
 
-    [HttpGet("{userId}")]
-    public IActionResult GetResourceIdForUser(int userId)
+    [HttpGet("{projectId}/tasks")]
+    public ActionResult<List<Task>> GetAllTasksForProject(int projectId)
     {
-        var resourceId = userResouceService.GetResourceIdForUser(userId);
-        return Ok(resourceId);
-    }
-}
-
-
-[Route("api/[controller]")]
-public class ResourceController : ControllerBase
-{
-    private readonly IResourceService resourceService;
-
-    [HttpGet("")]
-    public ActionResult<List<Resource>> GetResourcesById([FromQuery] List<int> projectIds)
-    {
-        var resources = resourceService.GetResourcesById(resourceIds);
-        return Ok(resources);
-    }
-
-    [HttpPut("{resourceId}/availability/{isAvailable}")]
-    public IActionResult UpdateResourceAvailability(int resourceId, bool isAvailable)
-    {
-        resourceService.UpdateResourceAvailability(resourceId, isAvailable);
-        return Ok();
-    }
-}
-
-[Route("api/[controller]")]
-public class TaskController : ControllerBase
-{
-    private readonly ITaskService taskService;
-
-    [HttpGet("project/{projectId}")]
-    public IActionResult GetTasksByProjectId(int projectId)
-    {
-        var tasks = taskService.GetTasksByProjectId(projectId);
+        var tasks = _projectService.GetAllTasksForProject(projectId);
         return Ok(tasks);
     }
 }
 
-[Route("api/[controller]")]
 public class UserTaskController : ControllerBase
 {
-    [HttpPost]
-    public ActionResult CreateUserTask(int userId, int taskId, int resourceId, bool taskCompleted)
+    private readonly IUserTaskService _userTaskService;
+    private readonly IResourceService _resourceService;
+
+    [HttpPost("checkin")]
+    public IActionResult CheckIn(int userId, int taskId, int resourceId, DateTime checkInTime)
     {
-        userTaskService.CreateUserTask(userId, taskId, resourceId, taskCompleted);    
+        // on check in user creates a task, with default value for istaskcompleted as false
+        _userTaskService.CreateUserTask(userId, taskId, resourceId, checkInTime);
+        _resourceService.UpdateResourceAvailability(resourceId, resourceAvailable=false);
+        return Ok();
     }
 
-    [HttpGet("{userId}/tasks/{taskId}/resources/{resourceId}/completed/{taskCompleted}")]
-    public ActionResult<int> GetUserTaskId(int userId, int taskId, int resourceId, bool taskCompleted)
+    [HttpPost("checkout")]
+    public IActionResult CompleteUserTask(int userId, int taskId, int resourceId, DateTime checkOutTime)
     {
-        var userTaskId = userTaskService.GetUserTaskId(userId, taskId, resourceId, taskCompleted); 
-    }
+        // Get the usertaskid for user,task,resource combination where taskisnotcompleted
+        int userTaskId = userTaskService.GetUserTaskId(userId, taskId, resourceId, taskCompleted=false);
 
-    [HttpPut("{userTaskId}")]
-    public ActionResult UpdateUserTaskCompletion(int userTaskId, DateTime checkOutTime, bool taskCompleted)
-    {
-        userTaskService.UpdateUserTaskCompletion(userTaskId, checkOutTime, taskCompleted);
+        // Update the task as completed, record the checkout time and set the resource available
+        userTaskService.UpdateUserTaskCompletion(userTaskId, checkOutTime, taskCompleted=true);
+        resourceService.UpdateResourceAvailability(resourceId, resourceAvailable=true);
+        return Ok();
     }
 }
