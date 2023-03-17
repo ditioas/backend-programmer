@@ -4,7 +4,7 @@ public interface IUserService
 
     List<Project> GetAllProjectsForUser(int userId);
 
-    List<Resource> GetAllResourcesForUser(int userId);
+    List<Resource> GetAllAvailableResourcesForUser(int userId);
 }
 
 public interface ICompanyService
@@ -16,8 +16,13 @@ public interface IProjectService
 {
     List<Task> GetAllTasksForProject(int projectId);
 }
+
+public interface IResourceService
+{
+    void UpdateResourceAvailability(int resourceId, bool isAvailable);
+}
     
-public interface ITaskService
+public interface IUserTaskService
 {
     void CreateUserTask(int userId, int taskId, int resourceId, DateTime checkInTime);
 
@@ -25,3 +30,22 @@ public interface ITaskService
 
     void UpdateUserTaskCompletion(int userTaskId, DateTime checkOutTime, bool taskCompleted);
 }
+
+// Client activity sequence for the api calls,
+// 1. userService.GetAllCompaniesForUser()
+// 2. companyService.GetDatabaseUrl()
+
+// subsequent queries will go the the database server with the URL in step2.
+// 3. userService.GetAllProjectsForUser()
+// 4. userService.GetAllAvailableResourcesForUser()
+// 5. projectService.GetAllTasksForProject()
+
+// Check-in
+// 6. userTaskService.CreateUserTask()
+// 7. resourceService.UpdateResourceAvailability(false)
+
+// Check-out
+// 8. userTaskService.GetUserTaskIn()
+// 9. userTaskService.UpdateUserTaskCompletion()
+// 10. resourceService.UpdateResourceAvailability(true)
+
