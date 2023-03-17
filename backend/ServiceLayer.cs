@@ -1,4 +1,4 @@
-public interface IService
+public interface IUserService
 {
     List<Company> GetAllCompaniesForUser(int userId);
 
@@ -17,7 +17,7 @@ public interface IProjectService
     List<Task> GetAllTasksForProject(int projectId);
 }
     
-public interface taskService
+public interface ITaskService
 {
     void CreateUserTask(int userId, int taskId, int resourceId, DateTime checkInTime);
 
