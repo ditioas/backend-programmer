@@ -54,7 +54,7 @@ public class UserTaskController : ControllerBase
     private readonly IResourceService _resourceService;
 
     [HttpPost("checkin")]
-    public IActionResult CheckIn(int userId, int taskId, int resourceId, DateTime checkInTime)
+    public IActionResult Checkin(int userId, int taskId, int resourceId, DateTime checkInTime)
     {
         // on check in user creates a task, with default value for istaskcompleted as false
         _userTaskService.CreateUserTask(userId, taskId, resourceId, checkInTime);
@@ -63,7 +63,7 @@ public class UserTaskController : ControllerBase
     }
 
     [HttpPost("checkout")]
-    public IActionResult CompleteUserTask(int userId, int taskId, int resourceId, DateTime checkOutTime)
+    public IActionResult Checkout(int userId, int taskId, int resourceId, DateTime checkOutTime)
     {
         // Get the usertaskid for user,task,resource combination where taskisnotcompleted
         int userTaskId = userTaskService.GetUserTaskId(userId, taskId, resourceId, taskCompleted=false);
