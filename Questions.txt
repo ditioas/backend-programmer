@@ -1,0 +1,36 @@
+Q1: When a user changes the company. What happens to the project, resources and tasks?
+I assume each company has its own set of project, resources and tasks and doesn't overlap
+with other companies (p, r, t) ?
+
+i.e a project, resource and task belong to a single company. Is this understanding correct?
+
+Clarification: Projects have a many to one relationship with a Company and Tasks have a many to one relationship with a Project.
+i.e. Assume that a project is not shared between companies and a task is not shared between projects.
+
+Q2: I estimate we don't need the scale of google and facebook reaching 1B users for our database
+design, based on some estimate and fair idea about which business ditio is in lets estimate the
+range for the number of users be in range of 100k-10M as of now. So as to scope our discussion.
+What do you think of this estimate?
+
+Clarification: Yes at the moment, that scale is even smaller. But to design a solution for the range that you specified is more than enough.
+
+Q3: There can be many projects inside the company, so the user is shown only a subset of it -
+project he is been assigned/scheduled? So a company might have project p1, p2, p3, p4 etc.
+But user A is scheduled for project p1, p3.
+
+Is this understanding correct? 
+
+Clarification: Yes that is correct. A user will usually work on a subset of projects in a company.
+
+Q4. Similarly, a project can have many tasks, so the user is shown only a subset of these tasks
+or all the tasks?
+
+Clarification: Assume that the user has the ability to pick any of his scheduled projects and any task in the project when he checks in.
+
+Q5. I think resources are company wide entity and can be used across different projects and tasks
+albeit only when free and not used in some other task. Is this understanding correct?
+So the same resource R1 can be shown to user in Project P1 -> task T1 and Project P2 -> task T2?
+If a user select a resource, then should it become unavailble to other users who might have
+that resource scheduled for them?
+
+Clarification: Exactly right.
